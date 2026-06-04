@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}About Project | AutoHeal Engine{% endblock %}
+
+{% block content %}
+<!-- about.html - Page detailing the self-healing rollback mechanism and architectural concepts -->
+<div class="hero-card" id="about-card">
+    <h1>About This Project</h1>
+    <p>This is a complete end-to-end self-healing deployment setup on AWS. It is built as a placement preparation project to demonstrate advanced DevOps principles.</p>
+    
+    <div style="margin-bottom: 2rem; color: var(--text-secondary); line-height: 1.6;">
+        <h3 style="color: var(--text-primary); margin-bottom: 0.75rem;">How It Works:</h3>
+        <ul style="padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem;">
+            <li><strong>Continuous Integration:</strong> Code push triggers CodePipeline. CodeBuild runs pytest tests and packages the app.</li>
+            <li><strong>Continuous Deployment:</strong> CodeDeploy performs an in-place deployment on our Ubuntu EC2 instance.</li>
+            <li><strong>Health Verification:</strong> CodeDeploy runs post-install bash scripts to verify the <code>/health</code> endpoint.</li>
+            <li><strong>Automated Self-Healing:</strong> In case of standard instance health failures, AWS CloudWatch alarms trigger a Python AWS Lambda function. The function retrieves the last stable deployment and invokes a CodeDeploy rollback programmatically.</li>
+        </ul>
+    </div>
+    
+    <div class="btn-container">
+        <a href="/" class="btn btn-primary" id="btn-back-home">Back to Home</a>
+    </div>
+</div>
+{% endblock %}

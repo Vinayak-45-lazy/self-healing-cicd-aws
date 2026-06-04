@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Home | AutoHeal Engine{% endblock %}
+
+{% block content %}
+<!-- home.html - Application landing page showcasing running status and application version -->
+<div class="hero-card" id="home-card">
+    <div class="status-badge" id="status-badge">
+        <span class="pulse"></span>
+        <span>App is running</span>
+    </div>
+    
+    <h1>Self-Healing CI/CD Deployment Engine</h1>
+    <p>This Python Flask application is deployed via AWS CodePipeline, CodeBuild, and CodeDeploy. If a deployment fails, our custom monitoring logic automatically performs a rollback to restore the system state.</p>
+    
+    <div class="meta-grid">
+        <div class="meta-item">
+            <span class="meta-label">Deploy Version</span>
+            <span class="meta-val" id="app-version">v{{ version }}</span>
+        </div>
+        <div class="meta-item">
+            <span class="meta-label">Current Environment</span>
+            <span class="meta-val" id="app-env">AWS EC2 (Free Tier)</span>
+        </div>
+    </div>
+    
+    <div class="btn-container">
+        <a href="/health" class="btn btn-primary" id="btn-check-health" target="_blank">Query Health Status</a>
+        <a href="/about" class="btn btn-secondary" id="btn-view-about">Learn More</a>
+    </div>
+</div>
+{% endblock %}

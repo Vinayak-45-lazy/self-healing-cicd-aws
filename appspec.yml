@@ -1,0 +1,30 @@
+# appspec.yml - AWS CodeDeploy configuration file
+# This file maps our application source files to the target EC2 instance and triggers deployment scripts.
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ubuntu/flask-app
+permissions:
+  - object: /home/ubuntu/flask-app
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+    mode: 755
+hooks:
+  BeforeInstall:
+    - location: scripts/before_install.sh
+      timeout: 300
+      runas: root
+  ApplicationStop:
+    - location: scripts/application_stop.sh
+      timeout: 300
+      runas: root
+  ApplicationStart:
+    - location: scripts/application_start.sh
+      timeout: 300
+      runas: root
+  ValidateService:
+    - location: scripts/validate_service.sh
+      timeout: 120
+      runas: root
