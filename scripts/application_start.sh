@@ -1,39 +1,37 @@
 #!/bin/bash
-# application_start.sh - Lifecycle script executed by AWS CodeDeploy to spin up the application
-# This script configures a Python virtual environment, installs dependencies, 
-# writes the systemd unit file, and starts the Flask app via Gunicorn under systemd.
+# application_start.sh - Start Flask app via Gunicorn
 
 set -e
 
 echo "=== Executing APPLICATION_START hook ==="
 
-DEPLOY_DIR="/home/ubuntu/flask-app"
+DEPLOY_DIR="/home/ec2-user/flask-app"
 VENV_DIR="$DEPLOY_DIR/venv"
 
-# 1. Navigate to deployment folder and ensure ownership is correct
+# Navigate to deployment folder
 cd "$DEPLOY_DIR"
-chown -R ubuntu:ubuntu "$DEPLOY_DIR"
+chown -R ec2-user:ec2-user "$DEPLOY_DIR"
 
-# 2. Setup Python Virtual Environment as the ubuntu user
+# Setup Python Virtual Environment
 echo "Setting up Python virtual environment..."
-sudo -u ubuntu python3 -m venv "$VENV_DIR"
+sudo -u ec2-user python3 -m venv "$VENV_DIR"
 
-# 3. Install requirements inside virtual environment
-echo "Installing application dependencies..."
-sudo -u ubuntu "$VENV_DIR/bin/pip" install --upgrade pip
-sudo -u ubuntu "$VENV_DIR/bin/pip" install -r "$DEPLOY_DIR/requirements.txt"
+# Install requirements
+echo "Installing dependencies..."
+sudo -u ec2-user "$VENV_DIR/bin/pip" install --upgrade pip
+sudo -u ec2-user "$VENV_DIR/bin/pip" install -r "$DEPLOY_DIR/requirements.txt"
 
-# 4. Create systemd service unit file dynamically
-echo "Creating systemd service file..."
+# Create systemd service file
+echo "Creating systemd service..."
 cat <<EOF | sudo tee /etc/systemd/system/flaskapp.service > /dev/null
 [Unit]
-Description=Gunicorn production server running Flask Application
+Description=Flask App running via Gunicorn
 After=network.target
 
 [Service]
-User=ubuntu
+User=ec2-user
 WorkingDirectory=$DEPLOY_DIR
-ExecStart=$VENV_DIR/bin/gunicorn --workers 3 --bind 0.0.0.0:8080 src.app:app
+ExecStart=$VENV_DIR/bin/gunicorn --workers 3 --bind 0.0.0.0:5000 src.app:app
 Restart=always
 RestartSec=5
 StandardOutput=syslog
@@ -44,10 +42,10 @@ SyslogIdentifier=flaskapp
 WantedBy=multi-user.target
 EOF
 
-# 5. Reload systemd daemon, enable, and start service
-echo "Reloading systemd and starting service..."
-sudo systemctl daemon-reload
-sudo systemctl enable flaskapp
-sudo systemctl start flaskapp
+# Start service
+echo "Starting Flask service..."
+systemctl daemon-reload
+systemctl enable flaskapp
+systemctl start flaskapp
 
-echo "=== APPLICATION_START hook completed successfully ==="
+echo "=== APPLICATION_START completed successfully ==="

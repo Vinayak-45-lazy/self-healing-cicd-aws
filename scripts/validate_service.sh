@@ -4,7 +4,7 @@
 
 echo "=== Executing VALIDATE_SERVICE hook ==="
 
-APP_PORT=8080
+APP_PORT=5000
 HEALTH_URL="http://localhost:${APP_PORT}/health"
 MAX_ATTEMPTS=6
 WAIT_SECONDS=5

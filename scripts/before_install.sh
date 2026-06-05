@@ -1,25 +1,23 @@
 #!/bin/bash
-# before_install.sh - Lifecycle script executed by AWS CodeDeploy before installing files
-# This script ensures dependencies like python3-venv are present and cleans up old installation folders.
+# before_install.sh - Executed by CodeDeploy before installing files
 
 set -e
 
 echo "=== Executing BEFORE_INSTALL hook ==="
 
-# Update package repository list and ensure Python virtualenv package is installed
-apt-get update -y
-apt-get install -y python3-pip python3-venv curl
+# Update package repository and install dependencies
+yum update -y
+yum install -y python3-pip python3 curl
 
-# Clean up the deployment directory if it exists to ensure a clean slate,
-# but keep the logs folder if required (optional)
-DEPLOY_DIR="/home/ubuntu/flask-app"
+# Clean up deployment directory for fresh install
+DEPLOY_DIR="/home/ec2-user/flask-app"
 if [ -d "$DEPLOY_DIR" ]; then
-    echo "Cleaning up existing installation folder: $DEPLOY_DIR"
+    echo "Cleaning up existing installation: $DEPLOY_DIR"
     rm -rf "$DEPLOY_DIR"
 fi
 
-# Ensure target directories exist and are owned by the ubuntu user
+# Create target directory with correct ownership
 mkdir -p "$DEPLOY_DIR"
-chown -R ubuntu:ubuntu "$DEPLOY_DIR"
+chown -R ec2-user:ec2-user "$DEPLOY_DIR"
 
-echo "=== BEFORE_INSTALL hook finished successfully ==="
+echo "=== BEFORE_INSTALL completed successfully ==="

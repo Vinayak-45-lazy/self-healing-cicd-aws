@@ -1,5 +1,3 @@
-# buildspec.yml - AWS CodeBuild configuration file
-# This file governs the installation, testing, and packaging of our Flask application.
 version: 0.2
 
 phases:
@@ -7,16 +5,16 @@ phases:
     runtime-versions:
       python: 3.9
     commands:
-      - echo "Installing system dependencies and project packages..."
+      - echo "Installing dependencies..."
       - pip install --upgrade pip
       - pip install -r requirements.txt
   pre_build:
     commands:
-      - echo "Running unit tests with pytest..."
+      - echo "Running unit tests..."
       - pytest tests/
   build:
     commands:
-      - echo "Code compilation and quality checks passed on $(date)"
+      - echo "Build completed on $(date)"
   post_build:
     commands:
       - echo "Preparing artifacts for CodeDeploy..."
@@ -25,5 +23,8 @@ artifacts:
   files:
     - src/**/*
     - scripts/**/*
+    - lambda/**/*
     - appspec.yml
+    - buildspec.yml
     - requirements.txt
+  discard-paths: no
