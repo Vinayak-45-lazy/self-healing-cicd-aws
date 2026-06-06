@@ -122,3 +122,5 @@ This project is divided into structured, step-by-step documentation guides locat
 - **Production-Grade Application Hosting:** Configured `systemd` unit files to manage Gunicorn application processes under non-privileged service users. Learned the importance of application log redirection to syslog/journald.
 - **Defensive Scripting:** Wrote robust Bash scripts utilizing conditional check loops, status check filters (`curl`), and daemon process validations, ensuring host scripts fail gracefully.
 - **IAM Least Privilege Hardening:** Configured trust policies and custom JSON statements, ensuring CodeBuild and CodeDeploy roles only have read/write access to resources they absolutely require.
+#   p i p e l i n e   t r i g g e r  
+ 
