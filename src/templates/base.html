@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <!-- base.html - Core template with responsive structure, standard SEO features, and premium styles -->
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Self-Healing CI/CD Deployment Engine{% endblock %}</title>
     <!-- Compelling Meta Description for SEO and Professional Placement Portfolio -->
-    <meta name="description" content="A self-healing production grade deployment engine application that tracks version rollbacks and displays infrastructure health.">
+    <meta name="description"
+        content="A self-healing production grade deployment engine application that tracks version rollbacks and displays infrastructure health.">
     <!-- Link to Google Font & Custom Premium Stylesheet -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     {% block head %}{% endblock %}
-</head>
+</head>class
+
 <body>
 
     <!-- Header containing branding and main navigation -->
@@ -23,7 +26,8 @@
             <nav>
                 <ul>
                     <li><a href="/" id="nav-home" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
-                    <li><a href="/about" id="nav-about" class="{% if request.path == '/about' %}active{% endif %}">About Project</a></li>
+                    <li><a href="/about" id="nav-about" class="{% if request.path == '/about' %}active{% endif %}">About
+                            Project</a></li>
                     <li><a href="/health" id="nav-health" target="_blank">Health API</a></li>
                 </ul>
             </nav>
@@ -41,4 +45,5 @@
     </footer>
 
 </body>
+
 </html>
