@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 # Application version. This is critical for testing self-healing rollbacks.
 # When we deploy a new version, this version will change.
-APP_VERSION = "1.0.0"
+APP_VERSION = "2.0.0-broken"
 
 @app.route("/")
 def home():
@@ -32,16 +32,14 @@ def about():
 def health():
     """
     Health check endpoint.
-    Used by AWS CodeDeploy and Load Balancers to verify application status.
-    Returns:
-        JSON response with status 'healthy' and HTTP 200.
+    BROKEN VERSION - simulating failed deployment
     """
     response = {
-        "status": "healthy",
+        "status": "error",
         "version": APP_VERSION,
-        "description": "Self-Healing CI/CD Deployment Engine App is active."
+        "description": "BROKEN - deployment failed!"
     }
-    return jsonify(response), 200
+    return jsonify(response), 500
 
 if __name__ == "__main__":
     # Host 0.0.0.0 makes the server accessible from outside the container/host.
