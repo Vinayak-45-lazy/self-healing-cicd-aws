@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 # Application version. This is critical for testing self-healing rollbacks.
 # When we deploy a new version, this version will change.
-APP_VERSION = "2.0.0-broken"
+APP_VERSION = "1.0.0"
 
 @app.route("/")
 def home():
@@ -30,16 +30,12 @@ def about():
 
 @app.route("/health")
 def health():
-    """
-    Health check endpoint.
-    BROKEN VERSION - simulating failed deployment
-    """
     response = {
-        "status": "error",
+        "status": "healthy",
         "version": APP_VERSION,
-        "description": "BROKEN - deployment failed!"
+        "description": "Self-Healing CI/CD Deployment Engine App is active."
     }
-    return jsonify(response), 500
+    return jsonify(response), 200
 
 if __name__ == "__main__":
     # Host 0.0.0.0 makes the server accessible from outside the container/host.
