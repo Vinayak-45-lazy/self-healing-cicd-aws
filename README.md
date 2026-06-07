@@ -1,6 +1,5 @@
-# 🚀 Reliqube
+# 🚀 Reliqube : A Self-Healing CI/CD Deployment Engine on AWS
 
-A Self-Healing CI/CD Deployment Engine on AWS
 
 A production-ready CI/CD pipeline that **automatically tests, deploys, and recovers from failures** without human intervention.
 
